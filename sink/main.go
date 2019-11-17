@@ -1,8 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	"net"
 	"net/http"
 	"sync"
+
+	"flag"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
@@ -27,24 +31,37 @@ type Nodes struct {
 }
 
 var (
-	nodeman *Nodes
+	nodeman  *Nodes
+	datapool DataPool
+	pdaAddr  *string
+	laddr    *string
 )
 
 func main() {
 	// Echo instance
+	pdaAddr = flag.String("pda", "127.0.0.1:9091", "personal digital assistant address")
+	laddr = flag.String("local", "0.0.0.0:9090", "local addr")
+	flag.Parse()
 	nodeman = new(Nodes)
 	e := echo.New()
+	datapool.Data = make([]*SenData, 0)
 
 	e.POST("/node/register", register)
 	e.POST("/data/upload", upload)
+	e.GET("/battery/charge", charge)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":9090"))
+	e.Logger.Fatal(e.Start(*laddr))
 }
 
 type SenData struct {
 	T string
 	V string
+}
+
+type DataPool struct {
+	Data []*SenData
+	sync.Mutex
 }
 
 type Ret struct {
@@ -57,7 +74,30 @@ func upload(c echo.Context) error {
 	if err := c.Bind(d); err != nil {
 		return err
 	}
+	datapool.Lock()
+	defer datapool.Unlock()
+	datapool.Data = append(datapool.Data, d)
 	log.Infof("receive data:%v", d)
+	return nil
+}
+
+func charge(c echo.Context) error {
+	conn, err := net.Dial("tcp", *pdaAddr)
+	if err != nil {
+		log.Errorf("Send data error:%v", err)
+		return err
+	}
+	defer conn.Close()
+	datapool.Lock()
+	olddata := datapool.Data
+	datapool.Data = make([]*SenData, 0)
+	datapool.Unlock()
+	payload, err := json.Marshal(olddata)
+	if err != nil {
+		log.Errorf("charge json encode:%v", err)
+		return err
+	}
+	conn.Write(payload)
 	return nil
 }
 

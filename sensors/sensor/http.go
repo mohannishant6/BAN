@@ -26,8 +26,13 @@ func Upload(c echo.Context) error {
 	if err := c.Bind(d); err != nil {
 		return err
 	}
-	d.T += fmt.Sprintf("=>%s", s.ID())
+	d.T += fmt.Sprintf("-%s", s.ID())
 	return s.ForwardData(*d)
+}
+
+func HttpCharge(c echo.Context) error {
+	s.ChargeBattery()
+	return nil
 }
 
 func StartSensor(id, ip string, port string, sink, dataset string, interv, dura int, x, y, z int) {
@@ -54,6 +59,7 @@ func StartSensor(id, ip string, port string, sink, dataset string, interv, dura 
 	e := echo.New()
 	e.HideBanner = true
 	e.POST("/data/upload", Upload)
+	e.GET("/sensor/charge", HttpCharge)
 	listenaddr := fmt.Sprintf(":%s", port)
 	log.Info("listen:", listenaddr)
 	e.Logger.Fatal(e.Start(listenaddr))

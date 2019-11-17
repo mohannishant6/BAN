@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"github.com/labstack/gommon/log"
@@ -19,6 +20,9 @@ type Sensor interface {
 	StartDutyCycle()
 	Register() error
 	ID() string
+	ReduceBattery(v int32) error
+	ChargeBattery() error
+	GetBattery() int32
 }
 
 type Location struct {
@@ -42,12 +46,17 @@ type RealSensor struct {
 	CloserNodes []Node
 	DataSet     string
 	alive       bool
+	battery     *int32
 }
 
 var (
-	httpclient = createHTTPClient()
-	ErrSleep   = errors.New("sensor is not alive")
-	ErrForward = errors.New("data forwarding failed")
+	httpclient          = createHTTPClient()
+	ErrSleep            = errors.New("sensor is not alive")
+	ErrForward          = errors.New("data forwarding failed")
+	ErrNoBattery        = errors.New("Battery Exhausted")
+	ErrLowBattery       = errors.New("Battery Low")
+	ForwardCost   int32 = -2
+	GenerateCost  int32 = -1
 )
 
 func createHTTPClient() *http.Client {
@@ -62,18 +71,45 @@ func createHTTPClient() *http.Client {
 }
 
 func NewRealCensor(self Node, sink, dataset string, interv int, dur int) *RealSensor {
-	return &RealSensor{
+	res := &RealSensor{
 		self:     self,
 		Sink:     sink,
 		Interval: interv,
 		Duration: dur,
 		DataSet:  dataset,
 		alive:    true,
+		battery:  new(int32),
 	}
+	res.ChargeBattery()
+	return res
 }
 
 func (s *RealSensor) ID() string {
 	return s.self.ID
+}
+
+func (s *RealSensor) ChargeBattery() error {
+	atomic.StoreInt32(s.battery, 100)
+	if s.GetBattery() <= 0 && s.alive == false {
+		s.alive = true
+	}
+	log.Info("battery charged")
+	return nil
+}
+
+func (s *RealSensor) ReduceBattery(v int32) error {
+	if atomic.LoadInt32(s.battery) <= 0 {
+		return ErrNoBattery
+	}
+	atomic.AddInt32(s.battery, v)
+	if s.GetBattery() < 10 {
+		log.Warnf("battery level:%v", s.GetBattery())
+	}
+	return nil
+}
+
+func (s *RealSensor) GetBattery() int32 {
+	return atomic.LoadInt32(s.battery)
 }
 
 func (s *RealSensor) Register() error {
@@ -106,6 +142,12 @@ func (s *RealSensor) ForwardData(d SenData) error {
 	if !s.alive {
 		return ErrSleep
 	}
+
+	if s.GetBattery() < 10 {
+		log.Warnf("battery level:%v, refuse to forward data", s.GetBattery())
+		return ErrLowBattery
+	}
+	s.ReduceBattery(ForwardCost)
 	//origint := d.T
 	var err error
 	for _, v := range s.CloserNodes {
@@ -172,6 +214,7 @@ func (s *RealSensor) GenerateData() error {
 			//}
 			report := SenData{T: s.self.ID, V: dvalue}
 			log.Infof("report:%v", report)
+			s.ReduceBattery(GenerateCost)
 			s.ForwardData(report)
 			time.Sleep(time.Second)
 			idx++
@@ -191,8 +234,10 @@ func (s *RealSensor) StartDutyCycle() {
 			s.alive = false
 			log.Warn("sensor goes to sleep")
 			time.Sleep(interval)
-			s.alive = true
-			log.Warn("sensor wakes up")
+			if s.GetBattery() > 0 {
+				s.alive = true
+				log.Warn("sensor wakes up")
+			}
 		}
 	}()
 }
