@@ -114,14 +114,16 @@ func register(c echo.Context) error {
 	defer nodeman.Unlock()
 
 	exist := false
-	for _, v := range nodeman.nodes {
+	for sidx, v := range nodeman.nodes {
 		if v.ID == req.ID {
+			nodeman.nodes[sidx] = req
 			exist = true
+		} else {
+			if isCloser(req, v) {
+				res = append(res, v)
+			}
 		}
 		//if v.Loc.X < req.Loc.X && v.Loc.Y < req.Loc.Y && v.Loc.Z < req.Loc.Z {
-		if isCloser(req, v) {
-			res = append(res, v)
-		}
 	}
 
 	//TODO: sort res

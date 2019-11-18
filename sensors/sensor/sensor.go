@@ -200,9 +200,12 @@ func (s *RealSensor) GenerateData() error {
 		return err
 	}
 	dataset := strings.Split(string(dat), "\n")
-	idx := 0
+	idx := -1
 	go func() {
 		for true {
+			time.Sleep(time.Second)
+			idx++
+			s.ReduceBattery(GenerateCost)
 			//TODO: add critial logic
 			for !s.alive {
 				time.Sleep(time.Second)
@@ -212,12 +215,19 @@ func (s *RealSensor) GenerateData() error {
 			dvalue = strings.Trim(dataset[idx%len(dataset)], "\t \n")
 			//	idx++
 			//}
+			decodedata := make(map[string]interface{})
+			err = json.Unmarshal([]byte(dvalue), &decodedata)
+			if err != nil {
+				log.Errorf("GenerateData:fail to docode data:%v", dvalue)
+				continue
+			}
+			if decodedata["Condition"].(string) == "Normal" {
+				log.Infof("normal found, no sending:%v", dvalue)
+				continue
+			}
 			report := SenData{T: s.self.ID, V: dvalue}
 			log.Infof("report:%v", report)
-			s.ReduceBattery(GenerateCost)
 			s.ForwardData(report)
-			time.Sleep(time.Second)
-			idx++
 		}
 	}()
 	return nil
