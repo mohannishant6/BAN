@@ -7,6 +7,8 @@ import (
 	"sync"
 
 	"flag"
+    "io/ioutil"
+    "github.com/fernet/fernet-go"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
@@ -35,6 +37,7 @@ var (
 	datapool DataPool
 	pdaAddr  *string
 	laddr    *string
+    enckey = "f-Fd2vxmXx_3xO6Y1vdZ0eCnRN0ocBJ_cfpxC8W2JII="
 )
 
 func main() {
@@ -97,7 +100,17 @@ func charge(c echo.Context) error {
 		log.Errorf("charge json encode:%v", err)
 		return err
 	}
-    _, err = conn.Write(payload)
+
+    ioutil.WriteFile("origindata.txt",payload, 0644)
+    k := fernet.MustDecodeKeys(enckey)
+    tok, err := fernet.EncryptAndSign(payload, k[0])
+    if err != nil {
+        log.Errorf("encrypt failed:%v",err)
+        return err
+    }
+    ioutil.WriteFile("encdata.txt",tok, 0644)
+
+    _, err = conn.Write(tok)
     if err != nil{
         log.Errorf("sending data failed:%v",err)
     }
