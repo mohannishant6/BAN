@@ -78,6 +78,7 @@ func upload(c echo.Context) error {
 	datapool.Lock()
 	defer datapool.Unlock()
 	datapool.Data = append(datapool.Data, d)
+	log.Infof("data path:%v", d.T)
 	log.Infof("receive data:%v", d)
 	return nil
 }

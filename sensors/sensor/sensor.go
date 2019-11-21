@@ -70,6 +70,7 @@ func createHTTPClient() *http.Client {
 	return client
 }
 
+// NewRealCensor Create new Sensor Instance
 func NewRealCensor(self Node, sink, dataset string, interv int, dur int) *RealSensor {
 	res := &RealSensor{
 		self:     self,
@@ -88,8 +89,9 @@ func (s *RealSensor) ID() string {
 	return s.self.ID
 }
 
+// ChargeBattery change battery level to 100
 func (s *RealSensor) ChargeBattery() error {
-	atomic.StoreInt32(s.battery, 1000)
+	atomic.StoreInt32(s.battery, 100)
 	if s.GetBattery() <= 0 && s.alive == false {
 		s.alive = true
 	}
@@ -112,6 +114,7 @@ func (s *RealSensor) GetBattery() int32 {
 	return atomic.LoadInt32(s.battery)
 }
 
+// Register can register the sensor to the sink
 func (s *RealSensor) Register() error {
 	payload, _ := json.Marshal(s.self)
 	req, err := http.NewRequest("POST", fmt.Sprintf("http://%s/node/register", s.Sink), bytes.NewBuffer(payload))
@@ -124,6 +127,7 @@ func (s *RealSensor) Register() error {
 		return err
 	}
 
+	// the sink will return all the sensors that are closer to the sink, the list will be save to CloserNodes
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return err
@@ -138,6 +142,7 @@ func (s *RealSensor) Register() error {
 	return nil
 }
 
+// ForwardData can send data to the closer sensor
 func (s *RealSensor) ForwardData(d SenData) error {
 	if !s.alive {
 		return ErrSleep
@@ -150,6 +155,7 @@ func (s *RealSensor) ForwardData(d SenData) error {
 	s.ReduceBattery(ForwardCost)
 	//origint := d.T
 	var err error
+	// keep trying until success
 	for _, v := range s.CloserNodes {
 		log.Infof("forward data:%v to %v", d, v)
 		//d.T = origint + "->" + v.ID
@@ -161,6 +167,7 @@ func (s *RealSensor) ForwardData(d SenData) error {
 			log.Errorf("forward failed:%v", err)
 		}
 	}
+	//the sensor will just try to send the data to the sink if there are no closer sensors
 	log.Infof("no forward node avaliable, send data:%v to the sink:%v", d, s.Sink)
 	err = s.senddata(d, s.Sink)
 	if err != nil {
@@ -171,6 +178,7 @@ func (s *RealSensor) ForwardData(d SenData) error {
 	return nil
 }
 
+// senddata sendata to another sensor or the sink using http
 func (s *RealSensor) senddata(d SenData, addr string) error {
 	payload, _ := json.Marshal(d)
 	req, err := http.NewRequest("POST", fmt.Sprintf("http://%s/data/upload", addr), bytes.NewBuffer(payload))
@@ -194,6 +202,7 @@ func (s *RealSensor) senddata(d SenData, addr string) error {
 	return nil
 }
 
+// GenerateData generate data from provided dataset files
 func (s *RealSensor) GenerateData() error {
 	dat, err := ioutil.ReadFile(s.DataSet)
 	if err != nil {
@@ -221,6 +230,7 @@ func (s *RealSensor) GenerateData() error {
 				log.Errorf("GenerateData:fail to docode data:%v", dvalue)
 				continue
 			}
+			//only send the data when the data is not normal
 			if decodedata["Condition"].(string) == "Normal" {
 				log.Infof("normal found, no sending:%v", dvalue)
 				continue
@@ -233,6 +243,7 @@ func (s *RealSensor) GenerateData() error {
 	return nil
 }
 
+//StartDucyCycle start ducy cycle for the sensor
 func (s *RealSensor) StartDutyCycle() {
 	s.alive = true
 	duration := time.Duration(s.Duration) * time.Second
@@ -244,6 +255,7 @@ func (s *RealSensor) StartDutyCycle() {
 			s.alive = false
 			log.Warn("sensor goes to sleep")
 			time.Sleep(interval)
+			// the sensor will keep sleeping if the battery level is 0
 			if s.GetBattery() > 0 {
 				s.alive = true
 				log.Warn("sensor wakes up")

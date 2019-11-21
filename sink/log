@@ -1,0 +1,51 @@
+
+   ____    __
+  / __/___/ /  ___
+ / _// __/ _ \/ _ \
+/___/\__/_//_/\___/ v3.3.10-dev
+High performance, minimalist Go web framework
+https://echo.labstack.com
+____________________________________O/_______
+                                    O\
+⇨ http server started on [::]:9090
+{"time":"2019-11-21T18:19:34.308482873Z","level":"INFO","prefix":"-","file":"main.go","line":"146","message":"Register Sensor:&{tom_pressure1 127.0.0.1 1235 {0 3 2}}"}
+{"time":"2019-11-21T18:19:34.308930983Z","level":"INFO","prefix":"-","file":"main.go","line":"146","message":"Register Sensor:&{tom_temp1 127.0.0.1 1236 {4 4 4}}"}
+{"time":"2019-11-21T18:19:34.3097644Z","level":"INFO","prefix":"-","file":"main.go","line":"146","message":"Register Sensor:&{tom_insl1 127.0.0.1 1234 {0 1 1}}"}
+{"time":"2019-11-21T18:19:35.312379953Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:35.31253668Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:858018\", \"Glucose Specimen\": 117, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:36.314006476Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:36.314095305Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:160488\", \"Temperature\": 104.73, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:37.316485895Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:37.316596567Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:160488\", \"Temperature\": 106.88, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:38.314616809Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:38.314735501Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:858018\", \"Glucose Specimen\": 113, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:38.318837382Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:38.318933928Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:160488\", \"Temperature\": 100.15, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:39.321002966Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:39.321110577Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:160488\", \"Temperature\": 100.65, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:40.323254848Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:40.323358153Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 101.03, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:41.349906372Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:41.349963062Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 107.79, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:42.316814067Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:42.316916182Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:858991\", \"Glucose Specimen\": 115, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:42.35121618Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:42.351294136Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 100.87, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:43.352747777Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:43.352806675Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 102.37, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:44.318705185Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:44.318797119Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:858991\", \"Glucose Specimen\": 114, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:48.321034657Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:48.321134061Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:858991\", \"Glucose Specimen\": 115, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:50.35621383Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:50.356336892Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 102.27, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:51.323046522Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_insl1"}
+{"time":"2019-11-21T18:19:51.323153945Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_insl1 {\"Date\": \"21-Nov-2019 12:54:31:859995\", \"Glucose Specimen\": 117, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:51.358731143Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:51.35886504Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 101.21, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:52.362130672Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:52.362314868Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 101.79, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:54.365271563Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:54.365351566Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 107.51, \"Condition\": \"Abnormal\"}\r}"}
+{"time":"2019-11-21T18:19:58.367428047Z","level":"INFO","prefix":"-","file":"main.go","line":"81","message":"data path:tom_temp1-tom_pressure1"}
+{"time":"2019-11-21T18:19:58.367497707Z","level":"INFO","prefix":"-","file":"main.go","line":"82","message":"receive data:&{tom_temp1-tom_pressure1 {\"Date\": \"18-Nov-2019 12:57:34:161483\", \"Temperature\": 100.15, \"Condition\": \"Abnormal\"}\r}"}

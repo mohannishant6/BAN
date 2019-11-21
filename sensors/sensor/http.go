@@ -46,12 +46,15 @@ func StartSensor(id, ip string, port string, sink, dataset string, interv, dura 
 			Z: z,
 		},
 	}
+	//Create new sensor
 	s = NewRealCensor(self, sink, dataset, interv, dura)
 	err := s.Register()
 	if err != nil {
 		log.Fatalf("Register failed:%v", err)
 	}
+	//start ducy cycle for the sensor
 	s.StartDutyCycle()
+	//starting generate data
 	err = s.GenerateData()
 	if err != nil {
 		log.Fatalf("load dataset failed:%v", err)
