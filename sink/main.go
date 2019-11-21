@@ -7,8 +7,6 @@ import (
 	"sync"
 
 	"flag"
-    "io/ioutil"
-    "github.com/fernet/fernet-go"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
@@ -101,16 +99,7 @@ func charge(c echo.Context) error {
 		return err
 	}
 
-    ioutil.WriteFile("origindata.txt",payload, 0644)
-    k := fernet.MustDecodeKeys(enckey)
-    tok, err := fernet.EncryptAndSign(payload, k[0])
-    if err != nil {
-        log.Errorf("encrypt failed:%v",err)
-        return err
-    }
-    ioutil.WriteFile("encdata.txt",tok, 0644)
-
-    _, err = conn.Write(tok)
+    _, err = conn.Write(payload)
     if err != nil{
         log.Errorf("sending data failed:%v",err)
     }
