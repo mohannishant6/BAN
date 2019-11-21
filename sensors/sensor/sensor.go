@@ -89,7 +89,7 @@ func (s *RealSensor) ID() string {
 }
 
 func (s *RealSensor) ChargeBattery() error {
-	atomic.StoreInt32(s.battery, 100)
+	atomic.StoreInt32(s.battery, 1000)
 	if s.GetBattery() <= 0 && s.alive == false {
 		s.alive = true
 	}
