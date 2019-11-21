@@ -97,7 +97,11 @@ func charge(c echo.Context) error {
 		log.Errorf("charge json encode:%v", err)
 		return err
 	}
-	conn.Write(payload)
+    _, err = conn.Write(payload)
+    if err != nil{
+        log.Errorf("sending data failed:%v",err)
+    }
+    log.Info("sending data successfully")
 	return nil
 }
 
