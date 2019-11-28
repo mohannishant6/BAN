@@ -113,15 +113,21 @@ sensorTemprature.json
  3. Create a VM using iso image.
  4. Check the IP address of the main machine(i.e Windows) and provide it to the Edge node.
  5. Install tmux in the VM using
-   *sudo apt install tmux
+   * ```shell
+    sudo apt install tmux 
+    ```
  
  6. Install git in the VM
-  *sudo apt install git
- 
+  * ```shell
+    sudo apt install git 
+    ```
+    
  7. Cloning this repository using git clone (---)
  8. Go to the clone directory using cd
  9. Running the shell script using 
-  * sh start.sh
+  * ```shell
+    sh start.sh
+    ``` 
  
  10. This script will autmatically turn on sink node as well as the sensors.
  
