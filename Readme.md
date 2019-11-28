@@ -95,18 +95,18 @@ sensorTemprature.json
   
   ```
   
- #For Windows Systems
+ # For Windows Systems
  
- There are two approaches -
+ **There are two approaches - **
  
- #A. Directly on the system using cmd
+ **A. Directly on the system using cmd**
  1. Intsalling Go in the system.
  2. Starting the sink and builiding it via command prompt using GO libraries.
  3. After that starting sensors so as to connect to the sync.
  
  Note: There might be IP address issues in the above approach so as to avoid that second approach was used.
  
- #B. Using Virtualbox
+ **B. Using Virtualbox**
  
  1. Install virtualbox.
  2. Download a Ubuntu iso image.
