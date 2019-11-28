@@ -97,7 +97,7 @@ sensorTemprature.json
   
  # For Windows Systems
  
- **There are two approaches - **
+ **There are two approaches:**
  
  **A. Directly on the system using cmd**
  1. Intsalling Go in the system.
