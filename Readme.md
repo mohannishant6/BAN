@@ -1,16 +1,21 @@
-Scalable computing assignment 4
+# SIMULATED BODY AREA NETWORK (BAN)
+Scalable Computing Project 4
 
-this project contains 3 parts:
+The purpose of this project is to implement, validate and demonstrate a simple scalable communications protocol that employs Peer to Peer modalities of the type that might be found in Body Area Networking communication scenarios.
 
-1. sink
-2. sensors
-3. PDA/Edge device
+We propose a Wireless Body Area Network implemented for real time monitoring of pateints in a hospital. Each patient is equipped with a number of sensors sending vital information to the sink attached to their body, which in turn, is capable of sending the data to a nearby edge node; the edge node being a server within the hospital. The edge node is where a doctor can monitor the status of all his patients using a dashboard.
 
+The proposed network has three major components:
 
+1. Sink
+2. Sensors
+3. Edge node
 
-# sink
+# Below are the guidelines to get the network simulation up and running for simulation:
 
-**sink is a simulator program for sink, it is written in Golang**
+# Sink
+
+**"sink" is a simulator program for a sink, it is written in Golang**
 
 * directory: sink
 
@@ -33,17 +38,13 @@ this project contains 3 parts:
       	personal digital assistant address (default "127.0.0.1:9091")
   ```
 
-  
+# Sensors
 
+**"sensor" is a simulator program for sensor, it is written in Golang.**
 
+**you have to start sink first, then start all the sensors and give them the right sink address**
 
-# sensors
-
-**sensor is a simulator program for sensor, it is written in Golang.**
-
-**you have to start sink first, then start all the sensor and give them the right sink address**
-
-sensor receive json files as dataset, you can use following files as dataset for sensors
+sensor receives json files (dummy) as dataset, you can use following files as dataset for sensors
 
 ```shell
 sensorBloodAlcohol.json
@@ -54,8 +55,6 @@ sensorInsulin.json
 sensorPacemaker.json
 sensorTemprature.json
 ```
-
-
 
 * directory: sensors
 
@@ -104,7 +103,7 @@ sensorTemprature.json
  2. Starting the sink and builiding it via command prompt using GO libraries.
  3. After that starting sensors so as to connect to the sync.
  
- Note: There might be IP address issues in the above approach so as to avoid that second approach was used.
+ Note: There might be IP address issues in this approach. Second approach using Ubuntu was therefore used to avoid such issues.
  
  **B. Using Virtualbox**
  
@@ -131,7 +130,12 @@ sensorTemprature.json
  
  10. This script will autmatically turn on sink node as well as the sensors.
  
+**Above steps should get the sensor running and send data to sink. This simulation is run on one single system, the system representing one patient. 
+# Steps to transfer data from Sink to Edge node and display dashboard.
 
+1. Open Final_Sending_Code.py and Final_Receiving_Code.py and update the hostname, port number.
+2. Run the receiver code at edge node and sending code at sink node.
+3. Open the Microsoft PowerBI dashboard and click update. The dashboard gets updated with new data.
   
 
   
