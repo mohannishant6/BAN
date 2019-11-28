@@ -111,9 +111,9 @@ sensorTemprature.json
  1. Install virtualbox.
  2. Download a Ubuntu iso image.
  3. Create a VM using iso image.
- 4. Check the IP address of the main machine(i.e Windows) and provide it to the Edge node.
+ 4. Check the IP address(WiFi) of the main machine(i.e Windows) and provide it to the Edge node.
  5. Install tmux in the VM using
-   * ```shell
+  * ```shell
     sudo apt install tmux 
     ```
  
