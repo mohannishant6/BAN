@@ -11,7 +11,7 @@ The proposed network has three major components:
 2. Sensors
 3. Edge node
 
-# Below are the guidelines to get the network simulation up and running for simulation:
+**Below are the guidelines to get the network simulation up and running for simulation:
 
 # Sink
 
