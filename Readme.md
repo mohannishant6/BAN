@@ -94,5 +94,38 @@ sensorTemprature.json
       	coordinate z (default 1)
   
   ```
+  
+ #For Windows Systems
+ 
+ There are two approaches -
+ 
+ #A. Directly on the system using cmd
+ 1. Intsalling Go in the system.
+ 2. Starting the sink and builiding it via command prompt using GO libraries.
+ 3. After that starting sensors so as to connect to the sync.
+ 
+ Note: There might be IP address issues in the above approach so as to avoid that second approach was used.
+ 
+ #B. Using Virtualbox
+ 
+ 1. Install virtualbox.
+ 2. Download a Ubuntu iso image.
+ 3. Create a VM using iso image.
+ 4. Check the IP address of the main machine(i.e Windows) and provide it to the Edge node.
+ 5. Install tmux in the VM using
+   *sudo apt install tmux
+ 
+ 6. Install git in the VM
+  *sudo apt install git
+ 
+ 7. Cloning this repository using git clone (---)
+ 8. Go to the clone directory using cd
+ 9. Running the shell script using 
+  * sh start.sh
+ 
+ 10. This script will autmatically turn on sink node as well as the sensors.
+ 
+
+  
 
   
