@@ -131,7 +131,7 @@ sensorTemprature.json
  
  10. This script will autmatically turn on sink node as well as the sensors.
  
-**Above steps should get the sensor running and send data to sink. This simulation is run on one single system, the system representing one patient. 
+**Above steps should get the sensor running and send data to sink. This simulation is run on one single system, the system representing one patient**
 # Steps to transfer data from Sink to Edge node and display dashboard.
 
 1. Open Final_Sending_Code.py and Final_Receiving_Code.py and update the hostname, port number.
