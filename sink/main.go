@@ -9,6 +9,7 @@ import (
 	"flag"
 
 	"github.com/labstack/echo"
+    "github.com/fernet/fernet-go"
 	"github.com/labstack/gommon/log"
 )
 
@@ -99,8 +100,15 @@ func charge(c echo.Context) error {
 		log.Errorf("charge json encode:%v", err)
 		return err
 	}
+    k := fernet.MustDecodeKeys(enckey)
+    tok, err := fernet.EncryptAndSign(payload, k[0])
+    if err != nil {
+        log.Errorf("encrypt failed:%v",err)
+        return err
+    }
 
-    _, err = conn.Write(payload)
+    _, err = conn.Write(tok)
+    //_, err = conn.Write(payload)
     if err != nil{
         log.Errorf("sending data failed:%v",err)
     }
