@@ -138,5 +138,5 @@ sensorTemprature.json
 2. Run the receiver code at edge node and sending code at sink node.
 3. Open the Microsoft PowerBI dashboard and click update. The dashboard gets updated with new data.
   
-
+![alt text](https://github.com/mohannishant6/BAN/blob/master/dashboard/iot.jpg)
   
